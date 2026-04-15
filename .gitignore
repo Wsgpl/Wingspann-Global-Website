@@ -57,6 +57,9 @@ backend/uploads/media/*
 
 # Local reports / generated artifacts
 frontend/eslint-output*.json
+backend/dist/
+*.zip
+frontend/dist.zip
 *.pid
 *.seed
 tmp/

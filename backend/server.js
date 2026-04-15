@@ -63,9 +63,14 @@ function injectNonceIntoHtml(html, nonce) {
 }
 
 function resolveSpaceViewerPath(filename) {
-  const distFile = path.join(__dirname, '../frontend/dist', filename);
-  if (fs.existsSync(distFile)) return distFile;
-  return path.join(__dirname, '../frontend/public', filename);
+  const candidates = [
+    process.env.FRONTEND_DIST_PATH && path.join(process.env.FRONTEND_DIST_PATH, filename),
+    path.join(__dirname, '../frontend/dist', filename),
+    path.join(__dirname, 'dist', filename),
+    path.join(__dirname, '../frontend/public', filename),
+  ].filter(Boolean);
+
+  return candidates.find((candidate) => fs.existsSync(candidate)) || candidates[0];
 }
 
 SPACE_VIEWER_FILES.forEach((filename) => {
@@ -151,7 +156,15 @@ app.get('/api/health', (req, res) => {
 
 // ── Serve React frontend in production ────────────────────────────────────────
 if (process.env.NODE_ENV === 'production') {
-  const distPath = path.join(__dirname, '../frontend/dist');
+  const distCandidates = [
+    process.env.FRONTEND_DIST_PATH,
+    path.join(__dirname, '../frontend/dist'),
+    path.join(__dirname, 'dist'),
+  ].filter(Boolean);
+  const distPath = distCandidates.find((candidate) =>
+    fs.existsSync(path.join(candidate, 'index.html'))
+  ) || distCandidates[0];
+
   app.use(express.static(distPath));
   app.get('*', (req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
