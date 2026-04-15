@@ -99,5 +99,5 @@ CREATE TABLE IF NOT EXISTS career_positions (
 -- Password below is bcrypt hash of "wingspann@admin2024" — CHANGE THIS
 -- To generate your own hash: node -e "const b=require('bcryptjs');console.log(b.hashSync('yourpassword',10))"
 INSERT INTO admin_users (username, password_hash)
-VALUES ('admin', '$2a$10$placeholder_replace_with_real_hash')
+VALUES ('admin', '$2b$10$JP/4EGCJ3kBoRw8UGWkPTOu03Xc3vLVWTjUAv0qHbxOzM2paCMz.C')
 ON DUPLICATE KEY UPDATE username = username;
