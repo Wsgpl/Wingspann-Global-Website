@@ -4,12 +4,12 @@ backend/node_modules/
 frontend/node_modules/
 
 # Build output
-dist/
+#dist/
 dist-ssr/
 coverage/
 .vite/
-frontend/dist/
-frontend/dist-ssr/
+#frontend/dist/
+#frontend/dist-ssr/
 
 # Environment and secrets
 .env
